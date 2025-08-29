@@ -32,7 +32,7 @@ class CardGame {
         this.gameBoard.innerHTML = '';
         this.gameCards.forEach((card, index) => {
             const cardElement = document.createElement('div');
-            cardElement.className = 'card hidden';
+            cardElement.className = 'w-20 h-20 bg-white rounded-xl flex items-center justify-center text-3xl cursor-pointer transition-all duration-300 hover:scale-105 shadow-lg';
             cardElement.dataset.index = index;
             cardElement.dataset.value = card;
             cardElement.addEventListener('click', () => this.flipCard(cardElement));
@@ -41,14 +41,14 @@ class CardGame {
     }
     
     flipCard(cardElement) {
-        if (cardElement.classList.contains('flipped') || 
-            cardElement.classList.contains('matched') || 
+        if (cardElement.classList.contains('bg-teal-400') || 
+            cardElement.classList.contains('bg-teal-600') || 
             this.flippedCards.length === 2) {
             return;
         }
         
-        cardElement.classList.remove('hidden');
-        cardElement.classList.add('flipped');
+        cardElement.classList.remove('bg-white');
+        cardElement.classList.add('bg-teal-400', 'text-white');
         cardElement.textContent = cardElement.dataset.value;
         this.flippedCards.push(cardElement);
         
@@ -63,10 +63,10 @@ class CardGame {
         const [card1, card2] = this.flippedCards;
         
         if (card1.dataset.value === card2.dataset.value) {
-            card1.classList.add('matched');
-            card2.classList.add('matched');
-            card1.classList.remove('flipped');
-            card2.classList.remove('flipped');
+            card1.classList.remove('bg-teal-400');
+            card2.classList.remove('bg-teal-400');
+            card1.classList.add('bg-teal-600', 'cursor-default');
+            card2.classList.add('bg-teal-600', 'cursor-default');
             this.matchedPairs++;
             this.score += 10;
             this.scoreElement.textContent = this.score;
@@ -75,10 +75,10 @@ class CardGame {
                 setTimeout(() => alert(`🎉 You won! Score: ${this.score}, Moves: ${this.moves}`), 500);
             }
         } else {
-            card1.classList.remove('flipped');
-            card2.classList.remove('flipped');
-            card1.classList.add('hidden');
-            card2.classList.add('hidden');
+            card1.classList.remove('bg-teal-400', 'text-white');
+            card2.classList.remove('bg-teal-400', 'text-white');
+            card1.classList.add('bg-white');
+            card2.classList.add('bg-white');
             card1.textContent = '';
             card2.textContent = '';
         }
