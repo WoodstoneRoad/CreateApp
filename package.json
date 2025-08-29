@@ -1,0 +1,13 @@
+{
+  "name": "card-memory-game",
+  "version": "1.0.0",
+  "description": "A simple card memory game built with HTML, CSS, and JavaScript",
+  "main": "index.html",
+  "scripts": {
+    "start": "python3 -m http.server 8000",
+    "serve": "python3 -m http.server 8000"
+  },
+  "keywords": ["card", "game", "memory", "html", "css", "javascript"],
+  "author": "",
+  "license": "MIT"
+}

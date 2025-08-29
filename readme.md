@@ -1,46 +1,48 @@
-# 🚀 Single Page Application (SPA)
+# 🃏 Card Memory Game
 
-A modern single-page web application that delivers a fast and seamless user experience using [React/Vue/Angular/Other].
+A simple and fun card matching game built with vanilla HTML, CSS, and JavaScript.
 
----
+## 🎮 How to Play
+
+- Click cards to flip them over
+- Match pairs of identical cards
+- Complete all pairs to win
+- Try to finish with the fewest moves!
+
+## 🚀 Quick Start
+
+```bash
+# Start local server
+npm start
+# or
+python3 -m http.server 8000
+```
+
+Open `http://localhost:8000` in your browser.
 
 ## 📦 Features
 
-- ⚡️ Client-side routing (no full page reloads)
-- 🔄 Dynamic content rendering
-- 🌐 REST/GraphQL API integration
+- 🎯 Memory matching gameplay
+- 🎨 Smooth animations
+- 📊 Score and move tracking
+- 🔄 Restart functionality
 - 📱 Responsive design
-- 🔒 Auth (Optional: OAuth, JWT)
-- 🧪 Unit and E2E testing setup
-
----
 
 ## 🛠️ Tech Stack
 
-| Layer        | Technology                |
-|--------------|----------------------------|
-| Framework    | React (with Vite or CRA) / Vue / Angular |
-| Routing      | React Router / Vue Router  |
-| Styling      | Tailwind CSS / SCSS / Material UI |
-| State Mgmt   | Redux / Vuex / Context API |
-| API Layer    | Axios / Fetch / Apollo     |
-| Tooling      | ESLint, Prettier, Jest, Cypress |
+- HTML5
+- CSS3 (Grid, Flexbox, Animations)
+- Vanilla JavaScript (ES6+)
 
----
+## 📁 Files
 
-## 📁 Folder Structure
-
-```bash
-📦 spa-app/
- ┣ 📂 public/
- ┣ 📂 src/
- ┃ ┣ 📂 components/
- ┃ ┣ 📂 pages/
- ┃ ┣ 📂 routes/
- ┃ ┣ 📂 assets/
- ┃ ┗ 📜 main.tsx / main.js
+```
+📦 card-game/
  ┣ 📜 index.html
+ ┣ 📜 style.css
+ ┣ 📜 script.js
  ┣ 📜 package.json
  ┗ 📜 README.md
+```
 
 
