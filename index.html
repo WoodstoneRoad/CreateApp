@@ -7,15 +7,275 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="container">
-        <h1>🃏 Card Memory Game</h1>
-        <div class="game-info">
-            <div class="score">Score: <span id="score">0</span></div>
-            <div class="moves">Moves: <span id="moves">0</span></div>
-            <button id="restart">New Game</button>
+    <!-- Navigation Header -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <span class="logo-icon">🃏</span>
+                <span class="logo-text">Memory Game</span>
+            </div>
+            
+            <!-- Desktop Navigation -->
+            <ul class="nav-menu">
+                <li class="nav-item">
+                    <a href="#game" class="nav-link active" data-page="game">
+                        <span class="nav-icon">🎮</span>
+                        <span class="nav-text">Game</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#settings" class="nav-link" data-page="settings">
+                        <span class="nav-icon">⚙️</span>
+                        <span class="nav-text">Settings</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#scores" class="nav-link" data-page="scores">
+                        <span class="nav-icon">🏆</span>
+                        <span class="nav-text">High Scores</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#instructions" class="nav-link" data-page="instructions">
+                        <span class="nav-icon">📖</span>
+                        <span class="nav-text">How to Play</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#about" class="nav-link" data-page="about">
+                        <span class="nav-icon">ℹ️</span>
+                        <span class="nav-text">About</span>
+                    </a>
+                </li>
+            </ul>
+            
+            <!-- Mobile Menu Toggle -->
+            <div class="hamburger">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
         </div>
-        <div class="game-board" id="gameBoard"></div>
+    </nav>
+
+    <!-- Breadcrumb Navigation -->
+    <div class="breadcrumb">
+        <div class="breadcrumb-container">
+            <span class="breadcrumb-item active" id="currentPage">Game</span>
+        </div>
     </div>
+
+    <!-- Main Content Area -->
+    <main class="main-content">
+        <!-- Game Page -->
+        <div id="game-page" class="page active">
+            <div class="container">
+                <h1>🃏 Card Memory Game</h1>
+                <div class="game-info">
+                    <div class="info-item">
+                        <span class="info-label">Score:</span>
+                        <span id="score" class="info-value">0</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Moves:</span>
+                        <span id="moves" class="info-value">0</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Time:</span>
+                        <span id="timer" class="info-value">00:00</span>
+                    </div>
+                </div>
+                <div class="game-controls">
+                    <button id="restart" class="btn btn-primary">New Game</button>
+                    <button id="pause" class="btn btn-secondary">Pause</button>
+                    <button id="hint" class="btn btn-accent">Hint</button>
+                </div>
+                <div class="game-board" id="gameBoard"></div>
+                <div class="difficulty-selector">
+                    <label for="difficulty">Difficulty:</label>
+                    <select id="difficulty">
+                        <option value="easy">Easy (4x2)</option>
+                        <option value="medium" selected>Medium (4x4)</option>
+                        <option value="hard">Hard (6x4)</option>
+                        <option value="expert">Expert (8x4)</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <!-- Settings Page -->
+        <div id="settings-page" class="page">
+            <div class="container">
+                <h1>⚙️ Settings</h1>
+                <div class="settings-grid">
+                    <div class="setting-card">
+                        <h3>🎨 Theme</h3>
+                        <div class="theme-options">
+                            <button class="theme-btn active" data-theme="default">Default</button>
+                            <button class="theme-btn" data-theme="dark">Dark</button>
+                            <button class="theme-btn" data-theme="colorful">Colorful</button>
+                        </div>
+                    </div>
+                    <div class="setting-card">
+                        <h3>🔊 Sound</h3>
+                        <div class="sound-controls">
+                            <label class="switch">
+                                <input type="checkbox" id="soundToggle" checked>
+                                <span class="slider"></span>
+                            </label>
+                            <span>Sound Effects</span>
+                        </div>
+                        <div class="volume-control">
+                            <label for="volume">Volume:</label>
+                            <input type="range" id="volume" min="0" max="100" value="50">
+                            <span id="volumeValue">50%</span>
+                        </div>
+                    </div>
+                    <div class="setting-card">
+                        <h3>🎯 Game Options</h3>
+                        <div class="game-options">
+                            <label class="switch">
+                                <input type="checkbox" id="autoFlip" checked>
+                                <span class="slider"></span>
+                            </label>
+                            <span>Auto-flip cards</span>
+                        </div>
+                        <div class="game-options">
+                            <label class="switch">
+                                <input type="checkbox" id="showTimer" checked>
+                                <span class="slider"></span>
+                            </label>
+                            <span>Show timer</span>
+                        </div>
+                    </div>
+                    <div class="setting-card">
+                        <h3>💾 Data</h3>
+                        <div class="data-controls">
+                            <button class="btn btn-warning" id="resetScores">Reset High Scores</button>
+                            <button class="btn btn-danger" id="resetAll">Reset All Data</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- High Scores Page -->
+        <div id="scores-page" class="page">
+            <div class="container">
+                <h1>🏆 High Scores</h1>
+                <div class="scores-container">
+                    <div class="difficulty-tabs">
+                        <button class="tab-btn active" data-difficulty="easy">Easy</button>
+                        <button class="tab-btn" data-difficulty="medium">Medium</button>
+                        <button class="tab-btn" data-difficulty="hard">Hard</button>
+                        <button class="tab-btn" data-difficulty="expert">Expert</button>
+                    </div>
+                    <div class="scores-list" id="scoresList">
+                        <div class="no-scores">No high scores yet. Play a game to set your first record!</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Instructions Page -->
+        <div id="instructions-page" class="page">
+            <div class="container">
+                <h1>📖 How to Play</h1>
+                <div class="instructions-content">
+                    <div class="instruction-card">
+                        <h3>🎯 Objective</h3>
+                        <p>Match all pairs of cards in the fewest moves and shortest time possible.</p>
+                    </div>
+                    <div class="instruction-card">
+                        <h3>🎮 How to Play</h3>
+                        <ol>
+                            <li>Click on any card to flip it and reveal the symbol</li>
+                            <li>Click on a second card to try to find its match</li>
+                            <li>If the cards match, they stay flipped. If not, they flip back</li>
+                            <li>Continue until all pairs are matched</li>
+                            <li>Try to complete the game in as few moves as possible!</li>
+                        </ol>
+                    </div>
+                    <div class="instruction-card">
+                        <h3>🏆 Scoring</h3>
+                        <ul>
+                            <li><strong>Match:</strong> +10 points</li>
+                            <li><strong>Time bonus:</strong> Faster completion = more points</li>
+                            <li><strong>Move penalty:</strong> Fewer moves = higher score</li>
+                        </ul>
+                    </div>
+                    <div class="instruction-card">
+                        <h3>🎚️ Difficulty Levels</h3>
+                        <ul>
+                            <li><strong>Easy:</strong> 4x2 grid (8 cards, 4 pairs)</li>
+                            <li><strong>Medium:</strong> 4x4 grid (16 cards, 8 pairs)</li>
+                            <li><strong>Hard:</strong> 6x4 grid (24 cards, 12 pairs)</li>
+                            <li><strong>Expert:</strong> 8x4 grid (32 cards, 16 pairs)</li>
+                        </ul>
+                    </div>
+                    <div class="instruction-card">
+                        <h3>💡 Tips</h3>
+                        <ul>
+                            <li>Try to remember the positions of cards you've seen</li>
+                            <li>Start from the corners and work your way in</li>
+                            <li>Use the hint button sparingly for better scores</li>
+                            <li>Take breaks if you're stuck - fresh eyes help!</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- About Page -->
+        <div id="about-page" class="page">
+            <div class="container">
+                <h1>ℹ️ About</h1>
+                <div class="about-content">
+                    <div class="about-card">
+                        <h3>🃏 Card Memory Game</h3>
+                        <p>A classic memory game built with modern web technologies. Test your memory and concentration skills by matching pairs of cards.</p>
+                        <div class="version-info">
+                            <span class="version">Version 2.0.0</span>
+                            <span class="build-date">Built: 2024</span>
+                        </div>
+                    </div>
+                    <div class="about-card">
+                        <h3>🛠️ Technologies Used</h3>
+                        <div class="tech-stack">
+                            <span class="tech-item">HTML5</span>
+                            <span class="tech-item">CSS3</span>
+                            <span class="tech-item">JavaScript ES6+</span>
+                            <span class="tech-item">Local Storage API</span>
+                        </div>
+                    </div>
+                    <div class="about-card">
+                        <h3>✨ Features</h3>
+                        <ul>
+                            <li>Multiple difficulty levels</li>
+                            <li>High score tracking</li>
+                            <li>Responsive design</li>
+                            <li>Theme customization</li>
+                            <li>Sound effects</li>
+                            <li>Timer and move counter</li>
+                        </ul>
+                    </div>
+                    <div class="about-card">
+                        <h3>📱 Browser Support</h3>
+                        <p>This game works best on modern browsers including Chrome, Firefox, Safari, and Edge. Mobile devices are fully supported.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Loading Overlay -->
+    <div id="loadingOverlay" class="loading-overlay">
+        <div class="loading-spinner"></div>
+        <div class="loading-text">Loading...</div>
+    </div>
+
+    <!-- Game Scripts -->
     <script src="script.js"></script>
+    <script src="main.js"></script>
 </body>
 </html>
