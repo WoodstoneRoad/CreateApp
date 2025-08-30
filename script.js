@@ -17,6 +17,12 @@ class CardGame {
         this.restartButton = document.getElementById('restart');
         this.difficultyButton = document.getElementById('difficulty');
         this.difficultyText = document.getElementById('difficultyText');
+        this.hintButton = document.getElementById('hint');
+        this.themeToggle = document.getElementById('themeToggle');
+        this.soundToggle = document.getElementById('soundToggle');
+        this.scoreProgress = document.getElementById('scoreProgress');
+        this.movesProgress = document.getElementById('movesProgress');
+        this.timeProgress = document.getElementById('timeProgress');
         this.winModal = document.getElementById('winModal');
         this.finalStats = document.getElementById('finalStats');
         this.playAgainButton = document.getElementById('playAgain');
@@ -29,6 +35,9 @@ class CardGame {
         this.createBoard();
         this.restartButton.addEventListener('click', () => this.restart());
         this.difficultyButton.addEventListener('click', () => this.changeDifficulty());
+        this.hintButton.addEventListener('click', () => this.showHint());
+        this.themeToggle.addEventListener('click', () => this.toggleTheme());
+        this.soundToggle.addEventListener('click', () => this.toggleSound());
         this.playAgainButton.addEventListener('click', () => this.closeModalAndRestart());
     }
     
@@ -95,6 +104,7 @@ class CardGame {
         if (this.flippedCards.length === 2) {
             this.moves++;
             this.movesElement.textContent = this.moves;
+            this.updateProgress();
             setTimeout(() => this.checkMatch(), 1000);
         }
     }
@@ -110,18 +120,23 @@ class CardGame {
             this.matchedPairs++;
             this.score += 10;
             this.scoreElement.textContent = this.score;
+            this.updateProgress();
             
             if (this.matchedPairs === this.cards.length) {
                 this.stopTimer();
                 setTimeout(() => this.showWinModal(), 500);
             }
         } else {
-            card1.classList.remove('from-teal-400', 'to-cyan-500', 'text-white', 'animate-flip');
-            card2.classList.remove('from-teal-400', 'to-cyan-500', 'text-white', 'animate-flip');
-            card1.classList.add('from-white', 'to-gray-100');
-            card2.classList.add('from-white', 'to-gray-100');
-            card1.textContent = '';
-            card2.textContent = '';
+            card1.classList.add('animate-shake');
+            card2.classList.add('animate-shake');
+            setTimeout(() => {
+                card1.classList.remove('from-teal-400', 'to-cyan-500', 'text-white', 'animate-flip', 'animate-shake');
+                card2.classList.remove('from-teal-400', 'to-cyan-500', 'text-white', 'animate-flip', 'animate-shake');
+                card1.classList.add('from-white', 'to-gray-100');
+                card2.classList.add('from-white', 'to-gray-100');
+                card1.textContent = '';
+                card2.textContent = '';
+            }, 500);
         }
         
         this.flippedCards = [];
@@ -134,6 +149,7 @@ class CardGame {
             const minutes = Math.floor(elapsed / 60);
             const seconds = elapsed % 60;
             this.timerElement.textContent = `${minutes}:${seconds.toString().padStart(2, '0')}`;
+            this.updateProgress();
         }, 1000);
     }
     
@@ -167,7 +183,43 @@ class CardGame {
         this.restart();
     }
     
-    restart() {
+    showHint() {
+        const hiddenCards = Array.from(this.gameBoard.children).filter(card => 
+            card.classList.contains('from-white'));
+        if (hiddenCards.length > 0) {
+            const randomCard = hiddenCards[Math.floor(Math.random() * hiddenCards.length)];
+            randomCard.classList.add('animate-pulse', 'ring-4', 'ring-yellow-400');
+            setTimeout(() => {
+                randomCard.classList.remove('animate-pulse', 'ring-4', 'ring-yellow-400');
+            }, 2000);
+        }
+    }
+    
+    toggleTheme() {
+        document.documentElement.classList.toggle('dark');
+        const isDark = document.documentElement.classList.contains('dark');
+        this.themeToggle.innerHTML = `<span class="text-2xl">${isDark ? '☀️' : '🌙'}</span>`;
+    }
+    
+    toggleSound() {
+        // Sound toggle functionality placeholder
+        const isMuted = this.soundToggle.classList.toggle('opacity-50');
+        this.soundToggle.innerHTML = `<span class="text-2xl">${isMuted ? '🔇' : '🔊'}</span>`;
+    }
+    
+    updateProgress() {
+        const maxScore = this.cards.length * 10;
+        const maxMoves = this.cards.length * 2;
+        const maxTime = 300; // 5 minutes
+        
+        const scorePercent = Math.min((this.score / maxScore) * 100, 100);
+        const movesPercent = Math.min((this.moves / maxMoves) * 100, 100);
+        const timePercent = this.startTime ? Math.min(((Date.now() - this.startTime) / 1000 / maxTime) * 100, 100) : 0;
+        
+        this.scoreProgress.style.width = `${scorePercent}%`;
+        this.movesProgress.style.width = `${movesPercent}%`;
+        this.timeProgress.style.width = `${timePercent}%`;
+    }
         this.flippedCards = [];
         this.matchedPairs = 0;
         this.moves = 0;
