@@ -41,8 +41,13 @@ class CardGame {
     }
     
     flipCard(cardElement) {
-        if (cardElement.classList.contains('bg-teal-400') || 
-            cardElement.classList.contains('bg-teal-600') || 
+    flipCard(cardElement) {
+        if (cardElement.dataset.state === 'flipped' || 
+            cardElement.dataset.state === 'matched' || 
+            this.isProcessing) return;
+
+        cardElement.classList.add('bg-teal-400');
+        cardElement.dataset.state = 'flipped';
             this.flippedCards.length === 2) {
             return;
         }
